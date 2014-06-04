@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>traintable</title>
+    <style type="text/css" media="screen">
+        body {
+            align: center;
+            margin: 0;
+        }
+
+        #content {
+            width: 600px;
+            height: 1wh;
+            margin: auto;
+            background-color: #fff;
+        }
+
+        svg {
+            width: 75px;
+            height: 500px;
+            display: inline;
+        }
+
+        line {
+            stroke: #66ffdd;
+            stroke-width: 2px;
+        }
+
+        th {
+            width: 80px;
+        }
+
+        td {
+            height: 600px;
+        }
+    </style>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+    <div id="content">
+        <h1>traintable</h1>
+    </div>
+
+    <script type="text/javascript">
+        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        var daysShort = days.map(function(s) { return s.substring(0,3); });
+        var data = [];
+        for (var i=0; i<7; i++) { data[i] = []; }
+
+        getData(function(info) {
+            parseData(info);
+            displayData();
+        });
+
+        //A test function that doesn't rely on AJAX so I can test locally
+        //This will be replaces with $.ajax once the rest is working
+        function getData(callback) {
+            var info = '';
+            for (i = 0; i < 10; i++) {
+                info += daysShort[(Math.random()*7)|0] + ' '
+                      + ((Math.random()*24)|0) + ':' + ((Math.random()*60)|0)
+                      + '\n';
+            }
+            console.log('calling back');
+            callback(info);
+        }
+
+        function parseData(info) {
+            console.log('parsing');
+            var index = {};
+            for (i=0; i<7; i++) {
+                index[daysShort[i]] = i;
+            }
+
+            var lines = info.split('\n');
+            lines.pop();
+
+            for (i=0; i<lines.length; i++) {
+                var match = lines[i].match(/^(\S{3}) (\d\d?)\:(\d\d?)$/);
+                data[index[match[1]]].push(+match[2]*60 + +match[3]);
+            }
+        }
+
+        function displayData(){
+            console.log('displaying');
+            var $content = $('#content');
+            var $table = $('<table>');
+            $content.append($table);
+
+            var $firstRow = $('<tr>');
+            $table.append($firstRow)
+            
+            for (i=0; i<7; i++) {
+                $firstRow.append('<th>' + days[i] + '</th>');
+            }
+
+            var $dataRow = $('<tr>');
+            $table.append($dataRow);
+
+            for (i=0; i<7; i++) {
+                var $dataCell = $('<td>');
+                var $svg = $('<svg>');
+
+                $svg.attr('width', 75);
+                $svg.attr('height', 500);
+
+                $dataRow.append($dataCell);
+                $dataCell.append($svg);
+
+                data[i].forEach(function(d) {
+                    var lineTop = 500 * d / 1440;
+                    var $line = $('<line/>');
+                    $line.attr('x1', 0);
+                    $line.attr('x2', 75);
+                    $line.attr('y1', lineTop);
+                    $line.attr('y2', lineTop);
+                    $svg.append($line);
+                });
+            }
+
+            $('body').html($('body').html());
+        }
+    </script>
+</body>
+</html>
