@@ -1,0 +1,25 @@
+body {
+    align: center;
+    margin: 0;
+}
+
+#content {
+    width: 600px;
+    height: 1wh;
+    margin: auto;
+    background-color: #fff;
+}
+
+svg {
+    border: 1px solid black
+}
+
+path {
+    stroke: #633;
+    stroke-opacity: 0.5;
+    stroke-width: 10px;
+}
+
+th {
+    width: 80px;
+}
