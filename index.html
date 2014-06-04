@@ -16,25 +16,21 @@
         }
 
         svg {
-            width: 75px;
-            height: 500px;
-            display: inline;
+            border: 1px solid black
         }
 
-        line {
-            stroke: #66ffdd;
-            stroke-width: 2px;
+        path {
+            stroke: #633;
+            stroke-opacity: 0.5;
+            stroke-width: 10px;
         }
 
         th {
             width: 80px;
         }
-
-        td {
-            height: 600px;
-        }
     </style>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js" charset="utf-8"></script>
 </head>
 <body>
     <div id="content">
@@ -55,13 +51,13 @@
         //A test function that doesn't rely on AJAX so I can test locally
         //This will be replaces with $.ajax once the rest is working
         function getData(callback) {
+            console.log('fetching data')
             var info = '';
-            for (i = 0; i < 10; i++) {
+            for (i = 0; i < 100; i++) {
                 info += daysShort[(Math.random()*7)|0] + ' '
                       + ((Math.random()*24)|0) + ':' + ((Math.random()*60)|0)
                       + '\n';
             }
-            console.log('calling back');
             callback(info);
         }
 
@@ -83,42 +79,28 @@
 
         function displayData(){
             console.log('displaying');
-            var $content = $('#content');
             var $table = $('<table>');
-            $content.append($table);
+            $('#content').append($table);
 
             var $firstRow = $('<tr>');
-            $table.append($firstRow)
-            
             for (i=0; i<7; i++) {
                 $firstRow.append('<th>' + days[i] + '</th>');
             }
+            $table.append($firstRow);
 
-            var $dataRow = $('<tr>');
-            $table.append($dataRow);
-
+            var $dataRow = $('<tr id="data">');
             for (i=0; i<7; i++) {
                 var $dataCell = $('<td>');
-                var $svg = $('<svg>');
-
-                $svg.attr('width', 75);
-                $svg.attr('height', 500);
-
                 $dataRow.append($dataCell);
-                $dataCell.append($svg);
+                var paper = Raphael($dataCell[0], 75, 500);
+                $dataCell.append(paper);
 
                 data[i].forEach(function(d) {
-                    var lineTop = 500 * d / 1440;
-                    var $line = $('<line/>');
-                    $line.attr('x1', 0);
-                    $line.attr('x2', 75);
-                    $line.attr('y1', lineTop);
-                    $line.attr('y2', lineTop);
-                    $svg.append($line);
+                    var pos = d * 500 / 1440;
+                    paper.path('M0,' + pos + 'L75,' + pos);
                 });
             }
-
-            $('body').html($('body').html());
+            $table.append($dataRow);
         }
     </script>
 </body>
