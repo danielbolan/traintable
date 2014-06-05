@@ -1,25 +1,41 @@
 body {
-    align: center;
     margin: 0;
+    padding: 15px;
+    font-family: sans-serif;
 }
 
 #content {
-    width: 600px;
+    width: 717px;
+    padding: 15px;
     height: 1wh;
     margin: auto;
-    background-color: #fff;
+    background-color: #eee;
 }
 
-svg {
-    border: 1px solid black
+h1 {
+    margin-top: 0px;
 }
 
 path {
     stroke: #633;
-    stroke-opacity: 0.5;
-    stroke-width: 10px;
+    stroke-opacity: 0.3;
+    stroke-width: 7px;
+}
+
+#content, table, th, td {
+    border: 1px solid #ddd;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
 }
 
 th {
-    width: 80px;
+    min-width: 100px;
+}
+
+td {
+    text-align: center;
+    padding: 5px;
 }
