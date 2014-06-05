@@ -89,8 +89,4 @@ getData(function(info) {
     parseData(info);
     displayData();
     setupScale();
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> master
