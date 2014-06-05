@@ -12,10 +12,13 @@ getData(function(info) {
 //This will be replaces with $.ajax once the rest is working
 function getData(callback) {
     console.log('fetching data')
-    $.ajax('data.txt', {
-        success: callback,
-        error: function(e) { throw e; }
-    })
+    var info = '';
+    for (i = 0; i < 100; i++) {
+        info += daysShort[(Math.random()*7)|0] + ' '
+              + ((Math.random()*24)|0) + ':' + ((Math.random()*60)|0)
+              + '\n';
+    }
+    callback(info);
 }
 
 function parseData(info) {
