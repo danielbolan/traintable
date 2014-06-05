@@ -52,12 +52,12 @@ function displayData(){
     for (i=0; i<7; i++) {
         var $dataCell = $('<td>');
         $dataRow.append($dataCell);
-        var paper = Raphael($dataCell[0], 75, 500);
+        var paper = Raphael($dataCell[0], 80, 500);
         $dataCell.append(paper);
 
         data[i].forEach(function(d) {
             var pos = d * 500 / 1440;
-            paper.path('M0,' + pos + 'L75,' + pos);
+            paper.path('M0,' + pos + 'L80,' + pos);
         });
     }
     $table.append($dataRow);
