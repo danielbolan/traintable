@@ -7,13 +7,10 @@ for (var i=0; i<7; i++) { data[i] = []; }
 //This will be replaces with $.ajax once the rest is working
 function getData(callback) {
     console.log('fetching data')
-    var info = '';
-    for (i = 0; i < 100; i++) {
-        info += daysShort[(Math.random()*7)|0] + ' '
-              + ((Math.random()*24)|0) + ':' + ((Math.random()*60)|0)
-              + '\n';
-    }
-    callback(info);
+    $.ajax('data.txt', {
+        success: callback,
+        error: function(e) { throw e; }
+    })
 }
 
 function parseData(info) {
