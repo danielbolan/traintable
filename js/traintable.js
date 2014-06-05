@@ -3,11 +3,6 @@ var daysShort = days.map(function(s) { return s.substring(0,3); });
 var data = [];
 for (var i=0; i<7; i++) { data[i] = []; }
 
-getData(function(info) {
-    parseData(info);
-    displayData();
-});
-
 //A test function that doesn't rely on AJAX so I can test locally
 //This will be replaces with $.ajax once the rest is working
 function getData(callback) {
@@ -48,7 +43,7 @@ function displayData(){
     }
     $table.append($firstRow);
 
-    var $dataRow = $('<tr id="data">');
+    var $dataRow = $('<tr id="dataRow">');
     for (i=0; i<7; i++) {
         var $dataCell = $('<td>');
         $dataRow.append($dataCell);
@@ -62,3 +57,39 @@ function displayData(){
     }
     $table.append($dataRow);
 }
+
+function setupScale() {
+    var $scale = $('#scale'),
+        $time = $('#time'),
+        $content = $('#content')
+        $dataRow = $('#dataRow')
+        svgHeight = $('svg').height();
+
+    $scale.width($content.outerWidth()+45);
+    $scale.offset({left:$content.offset().left-45});
+
+    $('body').on('mousemove', function(e) { 
+        $scale.offset({top:e.clientY-$scale.height()});
+        $scale.offset({left:$content.offset().left-45});
+
+        var pos = e.clientY - $dataRow.offset().top - ($dataRow.height()-svgHeight)/2;
+        pos = ((pos|0) + 1)/svgHeight;
+        if (pos < 0 || pos > 1) {
+            $scale.hide();
+        } else {
+            $scale.show();
+        }
+        var hours = ((pos * 24) | 0) % 24;
+        var minutes = ((pos*1440) | 0) % 60;
+        hours = (hours < 10 ? '0' : '') + hours;
+        minutes = (minutes < 10 ? '0' : '') + minutes;
+        $time.text(hours + ':' + minutes);
+    });
+};
+
+//choo choo, y'all
+getData(function(info) {
+    parseData(info);
+    displayData();
+    setupScale();
+});
