@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 15px;
     font-family: sans-serif;
+    overflow: hidden;
 }
 
 #content {
@@ -38,4 +39,19 @@ th {
 td {
     text-align: center;
     padding: 5px;
+}
+
+#scale {
+    position: absolute;
+}
+
+hr {
+    border: 1px solid #ccc;
+    height: 1px;
+    margin: 0 0 -2px 0;
+}
+
+#time {
+    font-weight: bold;
+    font-size: 10px;
 }
