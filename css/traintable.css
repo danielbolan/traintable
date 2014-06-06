@@ -11,6 +11,7 @@ body {
     height: 1wh;
     margin: auto;
     background-color: #eee;
+    border: 1px solid #ddd;
 }
 
 h1 {
@@ -21,10 +22,6 @@ path {
     stroke: #633;
     stroke-opacity: 0.3;
     stroke-width: 7px;
-}
-
-#content, table, th, td {
-    border: 1px solid #ddd;
 }
 
 table {
@@ -39,6 +36,8 @@ th {
 td {
     text-align: center;
     padding: 5px;
+    background-color: #ddd;
+    border: 5px solid #eee;
 }
 
 #scale {
